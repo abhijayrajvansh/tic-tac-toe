@@ -1,4 +1,6 @@
-# React + TypeScript + Vite
+# TIC_TAC_TOE: React + TypeScript + Vite
+
+Author: [Abhijay Rajvansh](https://x.com/rajvanshtwt). For any queries, feel free to DM!
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
