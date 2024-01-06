@@ -1,14 +1,16 @@
-
 interface BlockProps {
-    value?: string | null;
+  value: string | null;
+  onClick: () => void;
 }
 
 const Block: React.FC<BlockProps> = (props) => {
-    return (
-        <div className=" border border-black h-40 w-40 flex items-center justify-center cursor-pointer font-semibold text-5xl left-1/2">
-            {props.value}
-        </div>
-    )
+  return (
+    <div
+      onClick={props.onClick}
+      className=" border-2 border-white text-yellow-400 h-32 w-32 flex items-center justify-center cursor-pointer font-semibold text-8xl left-1/2">
+      {props.value}
+    </div>
+  );
 };
 
 export default Block;
