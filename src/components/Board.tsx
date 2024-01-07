@@ -1,14 +1,15 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import Block from "./Block";
 
 const Board: React.FC = () => {
   const [state, setState] = useState(Array(9).fill(null));
   const [currentPlayerTurn, setCurrentPlayerTurn] = useState("X"); // this was something prev
-  const [prevTurn, setPrevTurn] = useState("X");
-  const [billboard, setBillboard] = useState("**billboard area**")
+  const [prevTurn, setPrevTurn] = useState<string>("O");
+  const [billboard, setBillboard] = useState("Click to play, first turn: X");
+  const [gameState, setGameStatus] = useState("going");
 
-//  Current Player Turn: {currentPlayerTurn} 
-//  {prevTurn} won the game! 
+  //  Current Player Turn: {currentPlayerTurn}
+  //  {prevTurn} won the game!
 
   // winning criteria logic
   const checkWinner = (state: any[]) => {
@@ -35,25 +36,28 @@ const Board: React.FC = () => {
   const lastState: Array<string | null> = Array.from(state);
   const win = checkWinner(lastState);
 
-  if (win) {
-    // after winning changing billboard to game over and player won
+  if (win && gameState === "going") {
+    setBillboard(`${prevTurn} won the game!`);
+    setGameStatus("gameover"); // taaki harbaar na chalne lage aur game crash ho jaye
   }
 
   const handleBlockClick = (boxNumber: number) => {
-    if (win) return; // return here means that no button click will happen afterwards
+    if (win) {
+      return;
+    } // return here means that no button click will happen afterwards
     // alert(`${currentPlayerTurn} won the game!`);
-    // shayad alert nahi use kar sakte because it acts like priority or async fun
-    // aur pehle execute ho jata hai
-
-    if (lastState[boxNumber] != null) return;
-    // if(lastState[boxNumber] === 'X' || lastState[boxNumber] === 'O') return;
-
+    // shayad alert nahi use kar sakte because it acts like priority or async fun aur pehle execute ho jata hai
     
+    if (lastState[boxNumber] != null) return; // to avoid overwrite the value of the block
 
-    setCurrentPlayerTurn(currentPlayerTurn === "X" ? "O" : "X"); 
-    setPrevTurn(currentPlayerTurn === "X" ? "X" : "O");
+    setCurrentPlayerTurn(currentPlayerTurn === "X" ? "O" : "X");
     lastState[boxNumber] = currentPlayerTurn;
     setState(lastState);
+    setPrevTurn(currentPlayerTurn); // recording previous value
+
+    // billboard manipulation
+    setBillboard(`Current Turn: ${prevTurn}`)
+
   };
 
   const handleClickReload = () => {
@@ -66,7 +70,7 @@ const Board: React.FC = () => {
         <h1 className="text-white font-bold text-4xl mb-5 mt-9 text-center rounded-lg p-2 bg-blue-800">
           Tic Tac Toe
         </h1>
-        <p className="text-white text-2xl font-medium text-center mb-5">
+        <p className="text-white text-xl font-medium text-center mb-5">
           {billboard}
         </p>
         <div className="flex row">
