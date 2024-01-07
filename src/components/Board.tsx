@@ -3,7 +3,7 @@ import Block from "./Block";
 
 const Board: React.FC = () => {
   const [state, setState] = useState(Array(9).fill(null));
-  const [currentPlayerTurn, setCurrentPlayerTurn] = useState(true);
+  const [currentPlayerTurn, setCurrentPlayerTurn] = useState("X"); // this was something prev
 
   // winning criteria logic
   const checkWinner = (state: any[]) => {
@@ -39,15 +39,10 @@ const Board: React.FC = () => {
     if (lastState[boxNumber] != null) return;
     // if(lastState[boxNumber] === 'X' || lastState[boxNumber] === 'O') return;
 
-    // lastState[boxNumber] = currentPlayerTurn;
-    if(currentPlayerTurn) {
-      lastState[boxNumber] = 'X'
-    }
-    else {
-      lastState[boxNumber] = 'O'
-    }
-    // setCurrentPlayerTurn(currentPlayerTurn === "X" ? "O" : "X");
-    setCurrentPlayerTurn(() => !currentPlayerTurn)
+    
+
+    setCurrentPlayerTurn(currentPlayerTurn === "X" ? "O" : "X"); 
+    lastState[boxNumber] = currentPlayerTurn;
     setState(lastState);
   };
 
@@ -62,8 +57,7 @@ const Board: React.FC = () => {
           Tic Tac Toe
         </h1>
         <p className="text-white text-2xl font-medium text-center mb-5">
-          Current Player Turn: {currentPlayerTurn}
-          {/* Congratulations, {currentPlayerTurn} won the game */}
+          Current Player Turn: {currentPlayerTurn }
         </p>
         <div className="flex row">
           <Block onClick={() => handleBlockClick(0)} value={state[0]} />
