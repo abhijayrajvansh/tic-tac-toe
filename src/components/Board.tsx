@@ -3,13 +3,10 @@ import Block from "./Block";
 
 const Board: React.FC = () => {
   const [state, setState] = useState(Array(9).fill(null));
-  const [currentPlayerTurn, setCurrentPlayerTurn] = useState("X"); // this was something prev
+  const [currentPlayerTurn, setCurrentPlayerTurn] = useState("X");
   const [prevTurn, setPrevTurn] = useState<string>("O");
   const [billboard, setBillboard] = useState("Click to play, first turn: X");
   const [gameState, setGameStatus] = useState("going");
-
-  //  Current Player Turn: {currentPlayerTurn}
-  //  {prevTurn} won the game!
 
   // winning criteria logic
   const checkWinner = (state: any[]) => {
