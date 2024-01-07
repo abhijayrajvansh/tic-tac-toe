@@ -1,10 +1,11 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Block from "./Block";
 
-const Board = () => {
+const Board: React.FC = () => {
   const [state, setState] = useState(Array(9).fill(null));
-  const [currentPlayerTurn, setCurrentPlayerTurn] = useState("X");
+  const [currentPlayerTurn, setCurrentPlayerTurn] = useState(true);
 
+  // winning criteria logic
   const checkWinner = (state: any[]) => {
     const winningCriteria = [
       [0, 1, 2],
@@ -26,20 +27,27 @@ const Board = () => {
     return false;
   };
 
-  const handleBlockClick = (boxNumber: number) => {
-    const lastState: Array<string | null> = Array.from(state);
-    const win = checkWinner(lastState);
+  const lastState: Array<string | null> = Array.from(state);
+  const win = checkWinner(lastState);
 
-    if (win) return;
+  const handleBlockClick = (boxNumber: number) => {
+    if (win) return; // return here means that no button click will happen afterwards
     // alert(`${currentPlayerTurn} won the game!`);
-    // shayad alert nahi use kar sakte because it acts like priority or async fun 
+    // shayad alert nahi use kar sakte because it acts like priority or async fun
     // aur pehle execute ho jata hai
-    
+
     if (lastState[boxNumber] != null) return;
     // if(lastState[boxNumber] === 'X' || lastState[boxNumber] === 'O') return;
 
-    lastState[boxNumber] = currentPlayerTurn;
-    setCurrentPlayerTurn(currentPlayerTurn === "X" ? "O" : "X");
+    // lastState[boxNumber] = currentPlayerTurn;
+    if(currentPlayerTurn) {
+      lastState[boxNumber] = 'X'
+    }
+    else {
+      lastState[boxNumber] = 'O'
+    }
+    // setCurrentPlayerTurn(currentPlayerTurn === "X" ? "O" : "X");
+    setCurrentPlayerTurn(() => !currentPlayerTurn)
     setState(lastState);
   };
 
@@ -48,13 +56,14 @@ const Board = () => {
   };
 
   return (
-    <div className="h-screen w-full relative flex justify-center">
+    <div className="h-screen w-full flex justify-center fixed">
       <div className="">
-        <h1 className="text-white text-6xl mb-5 mt-5 text-center mr-5 ml-5 rounded-lg p-2 bg-green-500">
+        <h1 className="text-white text-4xl mb-5 mt-7 text-center mr-5 ml-5 rounded-lg p-2 bg-green-500">
           Tic Tac Toe
         </h1>
         <p className="text-white text-2xl font-medium text-center mb-5">
           Current Player Turn: {currentPlayerTurn}
+          {/* Congratulations, {currentPlayerTurn} won the game */}
         </p>
         <div className="flex row">
           <Block onClick={() => handleBlockClick(0)} value={state[0]} />
@@ -77,12 +86,14 @@ const Board = () => {
         <div className="flex justify-center">
           <button
             onClick={handleClickReload}
-            className="text-white font-bold mt-7 ml px-5 py-4 rounded-lg bg-rose-500"
+            className="text-white font-bold mt-10 ml px-5 py-4 rounded-lg bg-rose-500"
           >
             Play Again!
           </button>
         </div>
-        <p className="text-white text-center mt-5">© Abhijay Rajvansh</p>
+        <p className="text-white text-center text-lg mt-5">
+          © Abhijay Rajvansh
+        </p>
       </div>
     </div>
   );
