@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import Block from "./Block";
 
 const Board: React.FC = () => {
   const [state, setState] = useState(Array(9).fill(null));
   const [currentPlayerTurn, setCurrentPlayerTurn] = useState("X"); // this was something prev
+  const [prevTurn, setPrevTurn] = useState("X");
+  const [billboard, setBillboard] = useState("**billboard area**")
+
+//  Current Player Turn: {currentPlayerTurn} 
+//  {prevTurn} won the game! 
 
   // winning criteria logic
   const checkWinner = (state: any[]) => {
@@ -30,6 +35,10 @@ const Board: React.FC = () => {
   const lastState: Array<string | null> = Array.from(state);
   const win = checkWinner(lastState);
 
+  if (win) {
+    // after winning changing billboard to game over and player won
+  }
+
   const handleBlockClick = (boxNumber: number) => {
     if (win) return; // return here means that no button click will happen afterwards
     // alert(`${currentPlayerTurn} won the game!`);
@@ -42,6 +51,7 @@ const Board: React.FC = () => {
     
 
     setCurrentPlayerTurn(currentPlayerTurn === "X" ? "O" : "X"); 
+    setPrevTurn(currentPlayerTurn === "X" ? "X" : "O");
     lastState[boxNumber] = currentPlayerTurn;
     setState(lastState);
   };
@@ -53,11 +63,11 @@ const Board: React.FC = () => {
   return (
     <div className="h-screen w-full flex justify-center fixed">
       <div className="">
-        <h1 className="text-white text-4xl mb-5 mt-7 text-center mr-5 ml-5 rounded-lg p-2 bg-green-500">
+        <h1 className="text-white font-bold text-4xl mb-5 mt-9 text-center rounded-lg p-2 bg-blue-800">
           Tic Tac Toe
         </h1>
         <p className="text-white text-2xl font-medium text-center mb-5">
-          Current Player Turn: {currentPlayerTurn }
+          {billboard}
         </p>
         <div className="flex row">
           <Block onClick={() => handleBlockClick(0)} value={state[0]} />
@@ -80,7 +90,7 @@ const Board: React.FC = () => {
         <div className="flex justify-center">
           <button
             onClick={handleClickReload}
-            className="text-white font-bold mt-10 ml px-5 py-4 rounded-lg bg-rose-500"
+            className="text-white font-bold mt-10 ml px-4 py-3 rounded-lg bg-rose-500 hover:bg-rose-800"
           >
             Play Again!
           </button>
