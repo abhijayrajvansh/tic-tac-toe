@@ -4,19 +4,43 @@ import Block from "./Block";
 const Board = () => {
   const [state, setState] = useState(Array(9).fill(null));
   const [currentPlayerTurn, setCurrentPlayerTurn] = useState("X");
-  const [winner, setWinner] = useState(false);
+
+  const checkWinner = (state: any[]) => {
+    const winningCriteria = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+
+    for (let i = 0; i < winningCriteria.length; i++) {
+      const [a, b, c] = winningCriteria[i];
+      if (state[a] != null && state[a] === state[b] && state[b] === state[c]) {
+        return true;
+      }
+    }
+    return false;
+  };
 
   const handleBlockClick = (boxNumber: number) => {
-    if (winner) {
-      alert("damn");
-    } // if winner is already found then game over
+    const lastState: Array<string | null> = Array.from(state);
+    const win = checkWinner(lastState);
 
-    const currState: Array<string | null> = Array.from(state);
-    // if(currState[boxNumber] === 'X' || currState[boxNumber] === 'O') return;
-    if (currState[boxNumber] != null) return;
-    currState[boxNumber] = currentPlayerTurn;
+    if (win) return;
+    // alert(`${currentPlayerTurn} won the game!`);
+    // shayad alert nahi use kar sakte because it acts like priority or async fun 
+    // aur pehle execute ho jata hai
+    
+    if (lastState[boxNumber] != null) return;
+    // if(lastState[boxNumber] === 'X' || lastState[boxNumber] === 'O') return;
+
+    lastState[boxNumber] = currentPlayerTurn;
     setCurrentPlayerTurn(currentPlayerTurn === "X" ? "O" : "X");
-    setState(currState);
+    setState(lastState);
   };
 
   const handleClickReload = () => {
@@ -26,10 +50,10 @@ const Board = () => {
   return (
     <div className="h-screen w-full relative flex justify-center">
       <div className="">
-        <h1 className="text-white text-6xl mb-10 mt-8 text-center mr-5 ml-5 rounded-lg p-2 bg-green-500">
+        <h1 className="text-white text-6xl mb-5 mt-5 text-center mr-5 ml-5 rounded-lg p-2 bg-green-500">
           Tic Tac Toe
         </h1>
-        <p className="text-white font-medium">
+        <p className="text-white text-2xl font-medium text-center mb-5">
           Current Player Turn: {currentPlayerTurn}
         </p>
         <div className="flex row">
@@ -51,8 +75,10 @@ const Board = () => {
         </div>
 
         <div className="flex justify-center">
-          <button onClick={handleClickReload} 
-            className="text-white font-bold mt-7 ml px-5 py-4 rounded-lg bg-rose-500">
+          <button
+            onClick={handleClickReload}
+            className="text-white font-bold mt-7 ml px-5 py-4 rounded-lg bg-rose-500"
+          >
             Play Again!
           </button>
         </div>
