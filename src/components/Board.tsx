@@ -8,8 +8,9 @@ const Board: React.FC = () => {
   const [billboard, setBillboard] = useState("Click to play, first turn: X");
   const [gameState, setGameStatus] = useState("going");
 
+
   // winning criteria logic
-  const checkWinner = (state: any[]) => {
+  const checkWinner = (state: (string | null)[]) => {
     const winningCriteria = [
       [0, 1, 2],
       [3, 4, 5],
