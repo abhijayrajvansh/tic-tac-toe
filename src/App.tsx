@@ -1,9 +1,15 @@
 import Board from "./components/Board";
 
 const App = () => {
-
   return (
-    <Board />
+    <>
+      <head>
+        <title>
+          Abhijay's Tic Tac Toe
+        </title>
+      </head>
+      <Board />
+    </>
   );
 };
 

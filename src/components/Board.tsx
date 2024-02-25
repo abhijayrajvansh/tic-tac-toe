@@ -63,44 +63,49 @@ const Board: React.FC = () => {
   };
 
   return (
-    <div className="h-screen w-full flex justify-center fixed">
-      <div className="">
-        <h1 className="text-white font-bold text-4xl mb-5 mt-9 text-center rounded-lg p-2 bg-blue-800">
-          Tic Tac Toe
-        </h1>
-        <p className="text-white text-xl font-medium text-center mb-5">
-          {billboard}
-        </p>
-        <div className="flex row">
-          <Block onClick={() => handleBlockClick(0)} value={state[0]} />
-          <Block onClick={() => handleBlockClick(1)} value={state[1]} />
-          <Block onClick={() => handleBlockClick(2)} value={state[2]} />
-        </div>
+    <div className="h-screen w-full flex flex-col justify-center items-center">
+      <div className="flex">
+        <div className="">
+          <h1 className="text-white font-bold text-4xl mb-5 mt-9 text-center rounded-lg p-2 bg-blue-800">
+            Tic Tac Toe
+          </h1>
+          <p className="text-white text-xl font-medium text-center mb-5">
+            {billboard}
+          </p>
+          <div className="flex row">
+            <Block onClick={() => handleBlockClick(0)} value={state[0]} />
+            <Block onClick={() => handleBlockClick(1)} value={state[1]} />
+            <Block onClick={() => handleBlockClick(2)} value={state[2]} />
+          </div>
 
-        <div className=" flex row">
-          <Block onClick={() => handleBlockClick(3)} value={state[3]} />
-          <Block onClick={() => handleBlockClick(4)} value={state[4]} />
-          <Block onClick={() => handleBlockClick(5)} value={state[5]} />
-        </div>
+          <div className=" flex row">
+            <Block onClick={() => handleBlockClick(3)} value={state[3]} />
+            <Block onClick={() => handleBlockClick(4)} value={state[4]} />
+            <Block onClick={() => handleBlockClick(5)} value={state[5]} />
+          </div>
 
-        <div className=" flex row">
-          <Block onClick={() => handleBlockClick(6)} value={state[6]} />
-          <Block onClick={() => handleBlockClick(7)} value={state[7]} />
-          <Block onClick={() => handleBlockClick(8)} value={state[8]} />
-        </div>
+          <div className=" flex row">
+            <Block onClick={() => handleBlockClick(6)} value={state[6]} />
+            <Block onClick={() => handleBlockClick(7)} value={state[7]} />
+            <Block onClick={() => handleBlockClick(8)} value={state[8]} />
+          </div>
 
-        <div className="flex justify-center">
-          <button
-            onClick={handleClickReload}
-            className="text-white font-bold mt-10 ml px-4 py-3 rounded-lg bg-rose-500 hover:bg-rose-800"
-          >
-            Play Again!
-          </button>
+          <div className="flex justify-center">
+            <button
+              onClick={handleClickReload}
+              className="text-white font-bold mt-10 ml px-4 py-3 rounded-lg bg-rose-500 hover:bg-rose-800"
+            >
+              Play Again!
+            </button>
+          </div>
         </div>
-        <p className="text-white text-center text-lg mt-5">
-          © Abhijay Rajvansh
-        </p>
-      </div>
+        </div>
+        <section className="mt-10 flex text-white">
+        <a href='https://linkedin.com/in/abhijayrajvansh' target="_blank" rel="noopener noreferrer">
+          <p className="text-white font-medium">© Abhijay Rajvansh</p>
+        </a>
+        <p>, All Right Reserved.</p>
+      </section>
     </div>
   );
 };
